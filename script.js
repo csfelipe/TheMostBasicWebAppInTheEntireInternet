@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     clipboardButton.addEventListener('click', () => {
         // Send message to mobile app
         if (window.webkit && window.webkit.messageHandlers) {
-            // iOS
-            window.webkit.messageHandlers.getMobileClipboardContent.postMessage({});
+            // iOS - using the message handler
+            window.webkit.messageHandlers.clipboardHandler.postMessage({
+                action: 'get-mobile-clipboard-content'
+            });
         } else if (window.Android) {
             // Android
             window.Android.getMobileClipboardContent();
