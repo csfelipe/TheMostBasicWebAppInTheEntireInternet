@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayArea = document.getElementById('displayArea');
 
     // Function to be called from mobile app to display text
-    window.displayTextFromMobile = function(text) {
+    window.getMobileClipboardContent = function(text) {
         displayArea.textContent = text;
     };
 
