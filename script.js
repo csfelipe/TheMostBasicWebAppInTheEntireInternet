@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const clipboardButton = document.getElementById('clipboardButton');
     const imageButton = document.getElementById('imageButton');
+    const displayArea = document.getElementById('displayArea');
+
+    // Function to be called from mobile app to display text
+    window.displayTextFromMobile = function(text) {
+        displayArea.textContent = text;
+    };
 
     clipboardButton.addEventListener('click', () => {
         // Send message to mobile app
