@@ -1,18 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const textInput = document.getElementById('textInput');
-    const displayButton = document.getElementById('displayButton');
     const clipboardButton = document.getElementById('clipboardButton');
-
-    displayButton.addEventListener('click', () => {
-        const text = textInput.value;
-        alert(text);
-    });
+    const imageButton = document.getElementById('imageButton');
 
     clipboardButton.addEventListener('click', () => {
         // Send message to mobile app
         if (window.webkit && window.webkit.messageHandlers) {
             // iOS - using the message handler
-            window.webkit.messageHandlers.clipboardHandler.postMessage({
+            window.webkit.messageHandlers.appHandler.postMessage({
                 action: 'get-mobile-clipboard-content'
             });
         } else if (window.Android) {
@@ -24,12 +18,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Also allow Enter key to trigger the display
-    textInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            displayButton.click();
+    imageButton.addEventListener('click', () => {
+        if (window.webkit && window.webkit.messageHandlers) {
+            // iOS - using the message handler
+            window.webkit.messageHandlers.appHandler.postMessage({
+                action: 'get-image-from-native-library'
+            });
+        } else if (window.Android) {
+            // Android
+            window.Android.getImageFromNativeLibrary();
+        } else {
+            // Fallback for testing in browser
+            console.log('Mobile app bridge not available');
         }
     });
+
+    // Example of sending a configuration request
+    function requestAppConfiguration() {
+        if (window.webkit && window.webkit.messageHandlers) {
+            window.webkit.messageHandlers.appHandler.postMessage({
+                action: 'get-app-configuration'
+            });
+        }
+    }
 
     // Function to be called from mobile app with clipboard content
     window.setClipboardContent = function(content) {
