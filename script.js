@@ -8,6 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
         displayArea.textContent = text;
     };
 
+    // Function to be called from mobile app to display image
+    window.displayImageFromMobile = function(imageData) {
+        // Create an image element
+        const img = document.createElement('img');
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        
+        // Set the image source to the base64 data
+        img.src = imageData;
+        
+        // Clear the display area and append the image
+        displayArea.innerHTML = '';
+        displayArea.appendChild(img);
+    };
+
     clipboardButton.addEventListener('click', () => {
         // Send message to mobile app
         if (window.webkit && window.webkit.messageHandlers) {
